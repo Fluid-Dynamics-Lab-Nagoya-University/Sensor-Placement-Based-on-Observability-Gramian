@@ -1,5 +1,5 @@
 # Sensor-Placement-Based-on-Observability-Gramian
-This repository contains Matlab (R2022b) codes to reproduce results for "Efficient sensor node selection for observability Gramian optimization."
+This repository contains Matlab (R2022a) codes to reproduce results for "Efficient sensor node selection for observability Gramian optimization."
 
 ## License
 [MIT-License](https://github.com/Aerodynamics-Lab/Sensor-Placement-Based-on-Observability-Gramian/blob/main/LICENSE)
@@ -8,6 +8,9 @@ This repository contains Matlab (R2022b) codes to reproduce results for "Efficie
 ---
 ### Main program  
 - P1_main.mlx  
+
+### Exporting graphics
+- P2_plots.mlx
 
 ### Function  
 #### Preprocessing  
@@ -23,8 +26,6 @@ This repository contains Matlab (R2022b) codes to reproduce results for "Efficie
 #### Calculation
 - F_calc_obsgram.m  
 
-#### Exporting results
-- P2_plots.mlx
       
 ## How to cite
 If you use the codes in your work, please cite the software itself and relevent paper.
