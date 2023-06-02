@@ -30,10 +30,8 @@ F_obj = @(Wo,maxrank) F_calc_det(Wo,maxrank);
 %% sensor selection
 % Problem set
 
-% dtype = 'random'; %! no need to download public dataset
-dtype = 'PIV';
-% dtype = 'cylinder';
-% dtype = 'SST';
+dtype = 'random'; %! no need to download public dataset
+% dtype = 'PIV'; %! dtype = {'PIV','cylinder','SST'}; for real-world example with open data
 
 caption = [
     'clone from github repo'
@@ -89,7 +87,7 @@ for idata = 1:prob.itr_data
             if ismember(alg,algs)
                 disp(alg)
                 tic
-                [sensors,pfull] = F_sensor_GG(A,C,[],ptmp,F_obj);
+                [sensors,pfull] = F_sensor_dg_gram(A,C,[],ptmp,F_obj);
                 ctime.(alg)( (idata-1)*prob.itr_time+itime, j ) = toc;
 
                 sens(j).(alg)(:,idata) = sensors;
@@ -105,7 +103,7 @@ for idata = 1:prob.itr_data
                 disp(alg)
                 for k = 1:size(prob.amp_reg,2)
                     tic
-                    [sensors] = F_sensor_GG_grad(A,C,[], ...
+                    [sensors] = F_sensor_dg_gramgrad(A,C,[], ...
                         ptmp,prob.amp_reg(k));
                     ctime.(alg)( (idata-1)*prob.itr_time+itime, j, k) = toc;
 
@@ -123,7 +121,7 @@ for idata = 1:prob.itr_data
                 disp(alg)
                 for k = 1:size(prob.dnm,2)
                     tic
-                    [zhat, ~, z, ~,rslt,iter] = F_sensor_gramianCRSNC_dlyap(C,...
+                    [zhat, ~, z, ~,rslt,iter] = F_sensor_gramianCRSNC(C,...
                         ptmp, prob.maxiteration, A, prob.dnm(k));
                     ctime.(alg) ( (idata-1)*prob.itr_time+itime, j, k) = toc;
                     itrnum.(alg)( (idata-1)*prob.itr_time+itime, j, k) = iter;
@@ -154,7 +152,7 @@ for idata = 1:prob.itr_data
                 disp(alg)
                 tic
                 [z, cvx_cputime, cvx_optbnd, cvx_optval, cvx_slvitr,...
-                    cvx_slvtol, cvx_status] = F_cvx_gramian(A,C,ptmp);
+                    cvx_slvtol, cvx_status] = F_sensor_cvx_gram(A,C,ptmp);
                 ctime.(alg)((idata-1)*prob.itr_time+itime, j, 1) = toc;
                 echo off
 
@@ -173,7 +171,7 @@ for idata = 1:prob.itr_data
                 disp(alg)
                 tic
                 [z, cvx_cputime, cvx_optbnd, cvx_optval, cvx_slvitr,...
-                    cvx_slvtol, cvx_status] = F_cvx_gramian_sdp_lmi(A,C,ptmp);
+                    cvx_slvtol, cvx_status] = F_sensor_cvx_gram_sdp_lmi(A,C,ptmp);
                 ctime.(alg)((idata-1)*prob.itr_time+itime, j, 1) = toc;
                 echo off
 
@@ -268,6 +266,7 @@ function prob = F_problem_spec(prob,dtype)
             error(txterror)
         end
         [~, ~, time, mask, sst]...
+            ...= F_pre_read_NOAA_SST( prob.pathdata, [prob.pathdata,'/../lsmask.nc'] );
             = F_pre_read_NOAA_SST( [prob.pathdata,'sst.wkmean.1990-present.nc'], [prob.pathdata,'lsmask.nc'] );
         save([prob.pathdata,'/sst.wkmean.1990-present.mat'],'sst','time','mask','-v7.3')
 

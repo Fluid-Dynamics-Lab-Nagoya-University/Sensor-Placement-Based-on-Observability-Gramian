@@ -1,4 +1,4 @@
-function [sensors,pfull] = F_sensor_GG(A,Corg,sensors,p,F_obj)
+function [sensors,pfull] = F_sensor_dg_gram(A,Corg,sensors,p,F_obj)
 %{
     Greedy selection with any onjective function provided. Note that F_obj
     is to be maximized, so "-" to minimizing optimization s.t. -tr(inv(W)).

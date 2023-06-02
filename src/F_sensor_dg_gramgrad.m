@@ -1,4 +1,4 @@
-function [sensors] = F_sensor_GG_grad(Aorg,Corg,sensors,p,amp_reg)
+function [sensors] = F_sensor_dg_gramgrad(Aorg,Corg,sensors,p,amp_reg)
 %% derivative of gram matrix
 [~,r] = size(Corg);
 [ps,~]= size(sensors);

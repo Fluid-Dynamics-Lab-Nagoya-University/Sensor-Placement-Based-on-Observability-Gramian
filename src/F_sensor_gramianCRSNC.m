@@ -1,4 +1,4 @@
-function [zhat, L, ztilde, Utilde, data, iter] = F_sensor_gramianCRSNC_dlyap(C, k, MAXITER, A, dnm)
+function [zhat, L, ztilde, Utilde, data, iter] = F_sensor_gramianCRSNC(C, k, MAXITER, A, dnm)
 %{
 Solves the problem
 	maximize log det (sum_{i=1}^m z_i Wo_i + kappa sum_{i=1}^m(log(z_i)+ log(1-z_i))

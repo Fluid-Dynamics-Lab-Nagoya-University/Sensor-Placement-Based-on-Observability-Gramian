@@ -1,5 +1,5 @@
 function [z, cvx_cputime, cvx_optbnd, cvx_optval,...
-    cvx_slvitr, cvx_slvtol, cvx_status] = F_cvx_gramian(A, C, p)
+    cvx_slvitr, cvx_slvtol, cvx_status] = F_sensor_cvx_gram(A, C, p)
 solver_now = cvx_solver;
 [r,~] = size(A);
 [n,~] = size(C);
