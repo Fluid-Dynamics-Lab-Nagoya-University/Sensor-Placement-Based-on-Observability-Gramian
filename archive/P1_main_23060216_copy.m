@@ -30,8 +30,8 @@ F_obj = @(Wo,maxrank) F_calc_det(Wo,maxrank);
 %% sensor selection
 % Problem set
 
-dtype = 'random'; %! no need to download public dataset
-% dtype = 'PIV'; %! dtype = {'PIV','cylinder','SST'}; for real-world example with open data
+% dtype = 'random'; %! no need to download public dataset
+dtype = 'PIV'; %! dtype = {'PIV','cylinder','SST'}; for real-world example with open data
 
 caption = [
     'clone from github repo'
@@ -222,7 +222,9 @@ function prob = F_problem_spec(prob,dtype)
             prob.usedind(icut) = mat2cell(colon(prob.num_int*(icut-1)+1,...
                 prob.num_int*icut),1);
         end
-        prob.pathdata = ['../data/PIV/work/' prob.case_num '/PIV_flowfield/ufield_allt.mat'];
+        prob.pathdata = ['E:\OneDrive - 国立大学法人東北大学'...
+            '\data\PIV_Nankai2\' prob.case_num '\PIV_flowfield\ufield_allt.mat'];
+%         prob.pathdata = ['../data/PIV/work/' prob.case_num '/PIV_flowfield/ufield_allt.mat'];
         if ~isfile(prob.pathdata)
             txterror = [mfilename ': Cannot locate data <' dtype,'>; ',...
                 'download from <a href="http://www.aero.mech.tohoku.ac.jp/rom/Nonomura2021-Airfoil-PIV-data-for-linear-ROM-18.zip">Our web page</a>, ',...
